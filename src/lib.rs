@@ -226,3 +226,7 @@ pub trait AsyncWriteBytesExt: AsyncWrite + Unpin {
         self.write_all(&n.to_le_bytes()).await
     }
 }
+
+impl<R: AsyncRead + Unpin> AsyncReadBytesExt for R {}
+
+impl<W: AsyncWrite + Unpin> AsyncWriteBytesExt for W {}
