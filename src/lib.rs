@@ -1,8 +1,8 @@
 use async_trait::async_trait;
-use tokio::io::{self, AsyncReadExt, AsyncWriteExt};
+use tokio::io::{self, AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt};
 
 #[async_trait]
-pub trait AsyncReadBytesExt: AsyncReadExt + Unpin {
+pub trait AsyncReadBytesExt: AsyncRead + Unpin {
     async fn read_u8(&mut self) -> io::Result<u8> {
         let mut buf = [0; 1];
         self.read_exact(&mut buf).await?;
@@ -137,7 +137,7 @@ pub trait AsyncReadBytesExt: AsyncReadExt + Unpin {
 }
 
 #[async_trait]
-pub trait AsyncWriteBytesExt: AsyncWriteExt + Unpin {
+pub trait AsyncWriteBytesExt: AsyncWrite + Unpin {
     async fn write_u8(&mut self, n: u8) -> io::Result<()> {
         self.write_all(&[n]).await
     }
